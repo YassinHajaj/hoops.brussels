@@ -1,19 +1,413 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carte des terrains de basket à Bruxelles / Kaart van basketbal terreinen in Brussel</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <style>
-    html, body { margin: 0; padding: 0; height: 100%; }
-    #map { width: 100%; height: 100vh; }
-  </style>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+
+    <title>Hoops.Brussels - Carte des terrains de basket à Bruxelles / Kaart van basketbalterreinen in Brussel</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1d3e53">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Hoops Brussels">
+    <link rel="apple-touch-icon" href="logo-hoops.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon-2.png" sizes="32x32"/>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
+
+    <style>
+        html, body { margin: 0; padding: 0; height: 100%; }
+        #map { width: 100%; height: 100vh; }
+
+        #logo {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          z-index: 1001;
+          background: rgba(255, 255, 255, 0.65);
+          padding: 6px 10px;
+          border-radius: 10px;
+          box-shadow: 0 0 6px rgba(0,0,0,0.2);
+        }
+
+        #logo img {
+          height: 100px;
+        }
+
+        #suggestion-box {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          background: white;
+          padding: 12px 16px;
+          border-radius: 8px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+          z-index: 1001;
+          font-family: sans-serif;
+          text-align: center;
+        }
+
+        #suggest-button {
+          display: inline-block;
+          margin-top: 6px;
+          padding: 6px 10px;
+          background-color: #1d3e53;
+          color: white;
+          text-decoration: none;
+          border-radius: 6px;
+          font-weight: bold;
+        }
+
+        #suggest-button:hover {
+          background-color: #2a5672;
+        }
+
+        #install-button {
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+          background: white;
+          padding: 12px 16px;
+          border-radius: 8px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+          z-index: 1001;
+          font-family: sans-serif;
+          text-align: center;
+          display: none;
+          cursor: pointer;
+          color: #1d3e53;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        #install-button:hover {
+          background-color: #f0f0f0;
+        }
+
+        #install-button img {
+          width: 24px;
+          height: 24px;
+          vertical-align: middle;
+          margin-right: 8px;
+        }
+
+        #lang-switcher {
+          position: absolute;
+          top: 10px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 1001;
+          padding: 6px;
+          font-size: 14px;
+        }
+
+        /* Toggle buttons styles */
+        .toggle-container {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          margin-top: 10px;
+          z-index: 1001;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          background: rgba(255, 255, 255, 0.65);
+          padding: 10px;
+          border-radius: 10px;
+          box-shadow: 0 0 6px rgba(0,0,0,0.2);
+        }
+
+        .toggle-button {
+          background: #e0e0e0;
+          border: none;
+          padding: 4px 12px;
+          border-radius: 20px;
+          cursor: pointer;
+          font-size: 14px;
+          color: #666;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          min-width: 80px;
+          justify-content: center;
+          white-space: nowrap;
+          height: 28px;
+        }
+
+        .toggle-button:hover {
+          background: #d0d0d0;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .toggle-button.active {
+          background: #1d3e53;
+          color: white;
+        }
+
+        .toggle-button.active:hover {
+          background: #2a5672;
+        }
+
+        .toggle-button img {
+          width: 16px;
+          height: 16px;
+          opacity: 0.8;
+        }
+
+        .toggle-button.active img {
+          opacity: 1;
+        }
+
+        /* Popup Styles */
+        .court-popup {
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .court-popup-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: #1d3e53;
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .court-popup-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .court-popup-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .court-popup-content {
+            padding: 12px 16px;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .court-popup-description {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #4a5568;
+        }
+
+        /* Override Leaflet's default popup styles */
+        .leaflet-popup-content-wrapper {
+            padding: 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+            min-width: 200px;
+        }
+
+        .leaflet-popup-tip {
+            background: white;
+        }
+
+        /* Hide the close button */
+        .leaflet-popup-close-button {
+            display: none;
+        }
+
+        a {
+            color: #1d3e53;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-  <div id="map"></div>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="terrains.js"></script>
+<!-- Logo -->
+<div id="logo">
+    <img src="logo-hoops.png" alt="Hoops Brussels logo"/>
+    <div class="toggle-container">
+        <button id="toggle-courts" class="toggle-button active">
+            <span class="toggle-status">Hide</span>
+            <span class="courts-text">Courts</span>
+        </button>
+        <button id="toggle-multisport-courts" class="toggle-button active">
+            <span class="toggle-status">Hide</span>
+            <span class="multisport-courts-text">Multisport Courts</span>
+        </button>
+        <button id="toggle-clubs" class="toggle-button active">
+            <span class="toggle-status">Hide</span>
+            <span class="clubs-text">Clubs</span>
+        </button>
+    </div>
+</div>
+
+<!-- Sélecteur de langue -->
+<select id="lang-switcher">
+    <option value="fr">Français</option>
+    <option value="nl">Nederlands</option>
+    <option value="en">English</option>
+</select>
+
+<!-- Carte -->
+<div id="map"></div>
+
+<!-- Boîte de suggestion -->
+<div id="suggestion-box">
+    <p id="suggest-intro">💡 Vous connaissez un terrain manquant ?</p>
+    <a id="suggest-button" href="#">
+        ✉️ Proposer un terrain
+    </a>
+</div>
+
+<!-- Install Button -->
+<div id="install-button">
+    <img src="install-icon.svg" alt="Install"/>
+    <span id="install-text">Installer l'app</span>
+</div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<script src="courts-v1.js?v=12"></script>
+
+<script>
+    const translations = {
+      fr: {
+        suggestIntro: "💡 Vous connaissez un terrain manquant ?",
+        suggestBtn: "✉️ Proposer un terrain",
+        mailSubject: "Suggestion de terrain",
+        mailBody: "Bonjour,%0AJe souhaite proposer le terrain suivant :%0A[Nom du lieu]%0A[Adresse ou coordonnées]%0A[Commentaire supplémentaire]",
+        courtsText: "Terrains",
+        clubsText: "Clubs",
+        multisportCourtsText: "Terrains Multisports",
+        showText: "Afficher",
+        hideText: "Masquer"
+      },
+      nl: {
+        suggestIntro: "💡 Ken je een terrein dat ontbreekt?",
+        suggestBtn: "✉️ Stel een terrein voor",
+        mailSubject: "Voorstel voor basketbalterrein",
+        mailBody: "Hallo,%0AIk wil graag het volgende terrein voorstellen:%0A[Naam van de locatie]%0A[Adres of coördinaten]%0A[Aanvullende opmerkingen]",
+        courtsText: "Terreinen",
+        clubsText: "Clubs",
+        multisportCourtsText: "Multisportterreinen",
+        showText: "Toon",
+        hideText: "Verberg"
+      },
+      en: {
+        suggestIntro: "💡 Do you know a missing court?",
+        suggestBtn: "✉️ Suggest a court",
+        mailSubject: "Court Suggestion",
+        mailBody: "Hello,%0AI would like to suggest the following court:%0A[Name of the place]%0A[Address or coordinates]%0A[Additional comments]",
+        courtsText: "Courts",
+        clubsText: "Clubs",
+        multisportCourtsText: "Multisport Courts",
+        showText: "Show",
+        hideText: "Hide"
+      }
+    };
+
+    function updateLanguage(lang) {
+      const t = translations[lang];
+      document.getElementById("suggest-intro").textContent = t.suggestIntro;
+      const button = document.getElementById("suggest-button");
+      button.textContent = t.suggestBtn;
+      button.href = `mailto:contact@hoops.brussels?subject=${t.mailSubject}&body=${t.mailBody}`;
+      
+      // Update toggle button texts
+      document.querySelector('.courts-text').textContent = t.courtsText;
+      document.querySelector('.clubs-text').textContent = t.clubsText;
+      document.querySelector('.multisport-courts-text').textContent = t.multisportCourtsText;
+      
+      // Update show/hide texts
+      document.querySelectorAll('.toggle-button').forEach(button => {
+        const statusSpan = button.querySelector('.toggle-status');
+        statusSpan.textContent = button.classList.contains('active') ? t.hideText : t.showText;
+      });
+    }
+
+    const browserLang = navigator.language.startsWith("nl") ? "nl" :
+                        navigator.language.startsWith("en") ? "en" : "fr";
+    document.getElementById("lang-switcher").value = browserLang;
+    updateLanguage(browserLang);
+
+    document.getElementById("lang-switcher").addEventListener("change", (e) => {
+      updateLanguage(e.target.value);
+    });
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw-v1.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful');
+          })
+          .catch(err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+
+    // Handle install button
+    let deferredPrompt;
+    const installButton = document.getElementById('install-button');
+    const installText = document.getElementById('install-text');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installButton.style.display = 'block';
+    });
+
+    installButton.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        }
+        deferredPrompt = null;
+        installButton.style.display = 'none';
+      }
+    });
+
+    // Update install button text based on language
+    function updateInstallText(lang) {
+      const installTexts = {
+        fr: "Installer l'app",
+        nl: "App installeren",
+        en: "Install app"
+      };
+      installText.textContent = installTexts[lang];
+    }
+
+    // Update install text when language changes
+    document.getElementById("lang-switcher").addEventListener("change", (e) => {
+      updateInstallText(e.target.value);
+    });
+
+    // Set initial install text
+    updateInstallText(browserLang);
+</script>
+<script async defer data-domain="hoops.brussels" src="https://plausible.io/js/script.js"></script>
 </body>
 </html>
