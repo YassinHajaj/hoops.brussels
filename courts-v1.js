@@ -216,6 +216,7 @@ const clubs = [
   { nom: "Black Devils Vorst", coord: [50.80764357688078, 4.326912401986094], description: "<a href='https://www.blackdevilsvorst.be/'> 🧑🏻‍💻</a>", iconFileName: "black-devils-icon.svg" },
   { nom: "BC Avenir Evere", coord: [50.860725671938596, 4.416413666567762], description: "<a href='https://www.avenireverebc.be/'> 🧑🏻‍💻</a>", iconFileName: "avenir-evere-icon.jpeg" },
   { nom: "Brussels Basketball", coord: [50.89286017335025, 4.3765829134223], description: "<a href='https://www.brusselsbasketball.be/'> 🧑🏻‍💻</a>", iconFileName: "brussels-icon.png" },
+  { nom: "BC Polaris Brussel", coord: [50.86485658717384, 4.357356284446961], description: "<a href='https://sport.brussels/clubs/polaris-brussel-basketball-sport-club//'> 🧑🏻‍💻</a>", iconFileName: "polaris-icon.png" },
 ];
 
 function createMarkers() {
