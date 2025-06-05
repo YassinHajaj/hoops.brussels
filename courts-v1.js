@@ -35,7 +35,7 @@ locationButton.onAdd = function(map) {
           }).addTo(map);
           
           // Center map on user's location
-          map.setView([userLat, userLng], 15);
+          map.setView([userLat, userLng], 14);
           
           // Add a circle to show accuracy
           const accuracyCircle = L.circle([userLat, userLng], {
@@ -174,6 +174,7 @@ const courts = [
   { nom: "Parc des Muses (Molenbeek)", coord: [50.85411394974745, 4.316630784892097], description: "Terrain de basket en dur" },
   { nom: "'t Hof Ter Overbeeke (Berchem-Sainte-Agathe)", coord: [50.86961, 4.286886], description: "Terrain de basket en dur" },
   { nom: "Moortebeek (Anderlecht)", coord: [50.84502698849703, 4.290570650026593], description: "Terrain de basket en dur" },
+  { nom: "Merlo (Uccle)", coord: [50.79868219898505, 4.319082868000769], description: "Terrain de basket en dur" },
 ];
 
 const multiSportCourts = [
