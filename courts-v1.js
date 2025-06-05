@@ -215,6 +215,7 @@ const clubs = [
   { nom: "Molenbeek Rebels", coord: [50.86225582379745, 4.326822937579879], description: "<a href='https://molenbeekrebels.wixsite.com/molenbeekrebels/home'> 🧑🏻‍💻</a>", iconFileName: "rebels-icon.png" },
   { nom: "Black Devils Vorst", coord: [50.80764357688078, 4.326912401986094], description: "<a href='https://www.blackdevilsvorst.be/'> 🧑🏻‍💻</a>", iconFileName: "black-devils-icon.svg" },
   { nom: "BC Avenir Evere", coord: [50.860725671938596, 4.416413666567762], description: "<a href='https://www.avenireverebc.be/'> 🧑🏻‍💻</a>", iconFileName: "avenir-evere-icon.jpeg" },
+  { nom: "Brussels Basketball", coord: [50.89286017335025, 4.3765829134223], description: "<a href='https://www.brusselsbasketball.be/'> 🧑🏻‍💻</a>", iconFileName: "brussels-icon.png" },
 ];
 
 function createMarkers() {
