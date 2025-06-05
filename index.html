@@ -29,6 +29,105 @@
         html, body { margin: 0; padding: 0; height: 100%; }
         #map { width: 100%; height: 100vh; }
 
+        /* List View Styles */
+        #list-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            display: none;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .list-view-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-view-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1d3e53;
+            margin: 0;
+        }
+
+        .list-view-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 10px 0;
+        }
+
+        .court-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .court-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .court-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: #1d3e53;
+            color: white;
+        }
+
+        .court-card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .court-card-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .court-card-content {
+            padding: 16px;
+        }
+
+        .court-card-description {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #4a5568;
+        }
+
+        .court-card-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #1d3e53;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .court-card-link:hover {
+            text-decoration: underline;
+        }
+
         #logo {
           position: absolute;
           top: 10px;
@@ -237,6 +336,36 @@
             color: #1d3e53;
             text-decoration: none;
         }
+
+        /* View Toggle Button */
+        #view-toggle {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1001;
+            background: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1d3e53;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        #view-toggle:hover {
+            background: #f8f8f8;
+        }
+
+        #view-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
     </style>
 </head>
 <body>
@@ -260,6 +389,19 @@
     </div>
 </div>
 
+<!-- View Toggle Button -->
+<button id="view-toggle" title="Switch to list view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+    </svg>
+    <span>List View</span>
+</button>
+
 <!-- Sélecteur de langue -->
 <select id="lang-switcher">
     <option value="fr">Français</option>
@@ -269,6 +411,16 @@
 
 <!-- Carte -->
 <div id="map"></div>
+
+<!-- List View -->
+<div id="list-view">
+    <div class="list-view-header">
+        <h1 class="list-view-title"></h1>
+    </div>
+    <div class="list-view-content">
+        <!-- Courts will be dynamically added here -->
+    </div>
+</div>
 
 <!-- Boîte de suggestion -->
 <div id="suggestion-box">
@@ -407,6 +559,103 @@
 
     // Set initial install text
     updateInstallText(browserLang);
+
+    // Add view toggle functionality
+    const viewToggle = document.getElementById('view-toggle');
+    const mapView = document.getElementById('map');
+    const listView = document.getElementById('list-view');
+    const listViewContent = document.querySelector('.list-view-content');
+    let isListView = false;
+
+    function createCourtCard(court, type) {
+        const icon = type === 'court' ? 'hoop-icon.png' : 
+                    type === 'multisport' ? 'multisport-icon.png' : 
+                    court.iconFileName;
+        
+        return `
+            <div class="court-card">
+                <div class="court-card-header">
+                    <img src="${icon}" alt="${court.nom}" class="court-card-icon">
+                    <h3 class="court-card-title">${court.nom}</h3>
+                </div>
+                <div class="court-card-content">
+                    <p class="court-card-description">${court.description}</p>
+                    ${court.description.includes('href') ? '' : 
+                        `<a href="https://www.google.com/maps?q=${court.coord[0]},${court.coord[1]}" 
+                           target="_blank" 
+                           class="court-card-link">
+                            View on Google Maps
+                        </a>`
+                    }
+                </div>
+            </div>
+        `;
+    }
+
+    function updateListView() {
+        listViewContent.innerHTML = '';
+        
+        // Add regular courts
+        courts.forEach(court => {
+            if (document.getElementById('toggle-courts').classList.contains('active')) {
+                listViewContent.innerHTML += createCourtCard(court, 'court');
+            }
+        });
+
+        // Add multisport courts
+        multiSportCourts.forEach(court => {
+            if (document.getElementById('toggle-multisport-courts').classList.contains('active')) {
+                listViewContent.innerHTML += createCourtCard(court, 'multisport');
+            }
+        });
+
+        // Add clubs
+        clubs.forEach(club => {
+            if (document.getElementById('toggle-clubs').classList.contains('active')) {
+                listViewContent.innerHTML += createCourtCard(club, 'club');
+            }
+        });
+    }
+
+    viewToggle.addEventListener('click', () => {
+        isListView = !isListView;
+        if (isListView) {
+            mapView.style.display = 'none';
+            listView.style.display = 'block';
+            viewToggle.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                    <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                <span>Map View</span>
+            `;
+            updateListView();
+        } else {
+            mapView.style.display = 'block';
+            listView.style.display = 'none';
+            viewToggle.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+                <span>List View</span>
+            `;
+        }
+    });
+
+    // Update list view when toggles change
+    document.querySelectorAll('.toggle-button').forEach(button => {
+        button.addEventListener('click', () => {
+            if (isListView) {
+                updateListView();
+            }
+        });
+    });
 </script>
 <script async defer data-domain="hoops.brussels" src="https://plausible.io/js/script.js"></script>
 </body>
