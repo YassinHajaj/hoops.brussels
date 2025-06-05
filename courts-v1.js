@@ -196,6 +196,8 @@ const multiSportCourts = [
   { nom: "Ligne 28 (Bruxelles-Ville)", coord: [50.871348328148656, 4.341166638940061], description: "Terrain multisport basket/foot" },
   { nom: "Agoraspace Chazal (Schaerbeek)", coord: [50.85867973171001, 4.3939282576708365], description: "Terrain multisport basket/foot" },
   { nom: "Parc Fontainas (Bruxelles-Ville)", coord: [50.8460745161563, 4.345456332065738], description: "Terrain multisport basket/foot" },
+  { nom: "Agoraspace Josaphat (Schaerbeek)", coord: [50.86402809058351, 4.38142317880381], description: "Terrain multisport basket/foot" },
+  { nom: "Stephenson (Schaerbeek)", coord: [50.87146485575933, 4.370078336637557], description: "Terrain multisport basket/foot" },
 ];
 
 const clubs = [
