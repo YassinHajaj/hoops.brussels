@@ -234,6 +234,7 @@ function createMarkers() {
 }
 
 document.getElementById('toggle-courts').addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent event from bubbling up
     const button = e.currentTarget;
     button.classList.toggle('active');
     courtClusterGroup.clearLayers();
@@ -250,6 +251,7 @@ document.getElementById('toggle-courts').addEventListener('click', (e) => {
 });
 
 document.getElementById('toggle-multisport-courts').addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent event from bubbling up
     const button = e.currentTarget;
     button.classList.toggle('active');
     multisportCourtClusterGroup.clearLayers();
@@ -266,6 +268,7 @@ document.getElementById('toggle-multisport-courts').addEventListener('click', (e
 });
 
 document.getElementById('toggle-clubs').addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent event from bubbling up
     const button = e.currentTarget;
     button.classList.toggle('active');
     clubClusterGroup.clearLayers();
@@ -282,6 +285,7 @@ document.getElementById('toggle-clubs').addEventListener('click', (e) => {
 });
 
 document.getElementById('toggle-pick-up-games').addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent event from bubbling up
     const button = e.currentTarget;
     button.classList.toggle('active');
     pickUpGamesClusterGroup.clearLayers();

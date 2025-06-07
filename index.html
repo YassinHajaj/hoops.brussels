@@ -172,7 +172,7 @@
           position: fixed;
           top: 20px;
           right: 20px;
-          background: rgba(255, 255, 255, 0.9);
+          background: white;
           border: none;
           border-radius: 50%;
           width: 40px;
@@ -180,13 +180,29 @@
           font-size: 20px;
           cursor: pointer;
           z-index: 1001;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
           transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .menu-toggle:hover {
-          background: rgba(255, 255, 255, 1);
+          background: #f8f8f8;
           transform: scale(1.05);
+        }
+
+        .menu-toggle.active {
+          transform: rotate(180deg);
+        }
+
+        .menu-toggle.active span {
+          display: none;
+        }
+
+        .menu-toggle.active::before {
+          content: "×";
+          font-size: 24px;
         }
 
         .close-menu {
@@ -956,19 +972,21 @@
         // Menu toggle functionality
         const menuToggle = document.createElement('button');
         menuToggle.className = 'menu-toggle';
-        menuToggle.innerHTML = '☰';
+        menuToggle.innerHTML = '<span>☰</span>';
         document.body.appendChild(menuToggle);
 
         const logo = document.getElementById('logo');
         
         menuToggle.addEventListener('click', function() {
             logo.classList.toggle('show');
+            menuToggle.classList.toggle('active');
         });
 
         // Close menu when clicking outside
         document.addEventListener('click', function(event) {
             if (!logo.contains(event.target) && !menuToggle.contains(event.target)) {
                 logo.classList.remove('show');
+                menuToggle.classList.remove('active');
             }
         });
     });
