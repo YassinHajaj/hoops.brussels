@@ -175,6 +175,9 @@ const courts = [
   { nom: "'t Hof Ter Overbeeke (Berchem-Sainte-Agathe)", coord: [50.86961, 4.286886], description: "Terrain de basket en dur" },
   { nom: "Moortebeek (Anderlecht)", coord: [50.84502698849703, 4.290570650026593], description: "Terrain de basket en dur" },
   { nom: "Merlo (Uccle)", coord: [50.79868219898505, 4.319082868000769], description: "Terrain de basket en dur" },
+  { nom: "Square Felix Delhaye (Saint-Josse-ten-Noode)", coord: [50.85159398143303, 4.379633624995876], description: "Terrain de basket en dur" },
+  { nom: "Melkriek Basketball (Uccle)", coord: [50.789212356034916, 4.3231587358381], description: "Terrain de basket en dur" },
+  { nom: "Complexe Sportif de Berchem-Sainte-Agathe", coord: [50.86864247080661, 4.286554839714516], description: "2 paniers dans un cercle fermé" },
 ];
 
 const multiSportCourts = [
@@ -199,6 +202,13 @@ const multiSportCourts = [
   { nom: "Parc Fontainas (Bruxelles-Ville)", coord: [50.8460745161563, 4.345456332065738], description: "Terrain multisport basket/foot" },
   { nom: "Agoraspace Josaphat (Schaerbeek)", coord: [50.86402809058351, 4.38142317880381], description: "Terrain multisport basket/foot" },
   { nom: "Stephenson (Schaerbeek)", coord: [50.87146485575933, 4.370078336637557], description: "Terrain multisport basket/foot" },
+  { nom: "Georges Benoidt (Watermael-Boitsfort)", coord: [50.79989190527104, 4.413958996135121], description: "Terrain multisport basket/foot" },
+  { nom: "Quai du Hainaut (Molenbeek)", coord: [50.85057285219367, 4.336172519011198], description: "Terrain multisport basket/foot" },
+  { nom: "Agoraspace Lambin (Auderghem)", coord: [50.809164858788996, 4.433118983575772], description: "Terrain multisport basket/foot" },
+  { nom: "Agora Liverpool (Anderlecht)", coord: [50.84446245253038, 4.332243963473624], description: "Terrain multisport basket/foot" },
+  { nom: "Agora Fécondité (Anderlecht)", coord: [50.83816303519733, 4.27641952661947], description: "Terrain multisport basket/foot" },
+  { nom: "Aumale (Anderlecht)", coord: [50.84023562388431, 4.312273839959331], description: "Terrain multisport basket/foot" },
+  { nom: "Dries (Watermael-Boitsfort)", coord: [50.80218449531089, 4.3972083830671505], description: "Terrain multisport basket/foot" },
 ];
 
 const clubs = [
