@@ -124,6 +124,13 @@ const multiSportIcon = L.icon({
     popupAnchor: [0, -35]
 });
 
+const pickUpGamesIcon = L.icon({
+    iconUrl: 'pick-up-games-icon.png',
+    iconSize: [50, 50],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -35]
+});
+
 const lightBase = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png');
 const detailOverlay = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 lightBase.addTo(map);
@@ -139,10 +146,12 @@ map.on('zoomend', () => {
 const courtClusterGroup = L.markerClusterGroup();
 const clubClusterGroup = L.markerClusterGroup();
 const multisportCourtClusterGroup = L.markerClusterGroup();
+const pickUpGamesClusterGroup = L.markerClusterGroup();
 
 map.addLayer(courtClusterGroup);
 map.addLayer(multisportCourtClusterGroup);
 map.addLayer(clubClusterGroup);
+map.addLayer(pickUpGamesClusterGroup);
 
 const courts = [
   { nom: "Parc du Cinquantenaire", coord: [50.842403, 4.392589], description: "2 paniers, sol béton" },
@@ -232,14 +241,20 @@ const clubs = [
   { nom: "BC Polaris Brussel", coord: [50.86485658717384, 4.357356284446961], description: "<a href='https://sport.brussels/clubs/polaris-brussel-basketball-sport-club//'> 🧑🏻‍💻</a>", iconFileName: "polaris-icon.png" },
 ];
 
+const pickUpGames = [
+    { nom: "Pick Up Games - ADEPS Augerghem (Sun 5pm - 7pm)", coord: [50.809663601914096, 4.445457361758296], description: "<a href='https://www.supersaas.fr/schedule/Pickup_Brussels/Sunday_Ball'> Website</a>" },
+]
+
 function createMarkers() {
   courtClusterGroup.clearLayers();
   clubClusterGroup.clearLayers();
   multisportCourtClusterGroup.clearLayers();
+  pickUpGamesClusterGroup.clearLayers();
 
   courtMarkers = [];
   clubMarkers = [];
   multisportCourtMarkers = [];
+  pickUpGamesMarkers = [];
 
   courts.forEach(t => {
     const marker = L.marker(t.coord, { icon: hoopIcon })
@@ -298,6 +313,23 @@ function createMarkers() {
       clubClusterGroup.addLayer(marker);
     }
   });
+
+    pickUpGames.forEach(p => {
+    const marker = L.marker(p.coord, { icon: pickUpGamesIcon })
+      .bindPopup(`<div class='court-popup'>
+        <div class='court-popup-header'>
+          <img src='pick-up-games-icon.png' alt='Pick Up Game' class='court-popup-icon'>
+          <h3 class='court-popup-title'>${p.nom}</h3>
+        </div>
+        <div class='court-popup-content'>
+          <p class='court-popup-description'>${p.description}</p>
+        </div>
+      </div>`);
+    pickUpGamesMarkers.push(marker);
+    if (document.getElementById('toggle-pick-up-games').classList.contains('active')) {
+      pickUpGamesClusterGroup.addLayer(marker);
+    }
+    });
 }
 
 createMarkers();
@@ -344,6 +376,23 @@ document.getElementById('toggle-clubs').addEventListener('click', (e) => {
 
     if (isActive) {
       clubMarkers.forEach(marker => clubClusterGroup.addLayer(marker));
+    }
+
+    const statusSpan = button.querySelector('.toggle-status');
+    const currentLang = document.getElementById('lang-switcher').value;
+    statusSpan.textContent = isActive ?
+      translations[currentLang].hideText :
+      translations[currentLang].showText;
+});
+
+document.getElementById('toggle-pick-up-games').addEventListener('click', (e) => {
+    const button = e.currentTarget;
+    button.classList.toggle('active');
+    pickUpGamesClusterGroup.clearLayers();
+    const isActive = button.classList.contains('active');
+
+    if (isActive) {
+      pickUpGamesMarkers.forEach(marker => pickUpGamesClusterGroup.addLayer(marker));
     }
 
     const statusSpan = button.querySelector('.toggle-status');

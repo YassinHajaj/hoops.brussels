@@ -386,6 +386,10 @@
             <span class="toggle-status">Hide</span>
             <span class="clubs-text">Clubs</span>
         </button>
+        <button id="toggle-pick-up-games" class="toggle-button active">
+            <span class="toggle-status">Hide</span>
+            <span class="pick-up-games-text">Pick-Up Games</span>
+        </button>
     </div>
 </div>
 
@@ -452,7 +456,8 @@
         clubsText: "Clubs",
         multisportCourtsText: "Terrains Multisports",
         showText: "Afficher",
-        hideText: "Masquer"
+        hideText: "Masquer",
+        pickUpGamesText: "Pick-Up Games"
       },
       nl: {
         suggestIntro: "💡 Ken je een terrein dat ontbreekt?",
@@ -463,7 +468,8 @@
         clubsText: "Clubs",
         multisportCourtsText: "Multisportterreinen",
         showText: "Toon",
-        hideText: "Verberg"
+        hideText: "Verberg",
+        pickUpGamesText: "Pick-Up Games"
       },
       en: {
         suggestIntro: "💡 Do you know a missing court?",
@@ -474,7 +480,8 @@
         clubsText: "Clubs",
         multisportCourtsText: "Multisport Courts",
         showText: "Show",
-        hideText: "Hide"
+        hideText: "Hide",
+        pickUpGamesText: "Pick-Up Games"
       }
     };
 
@@ -613,6 +620,12 @@
         clubs.forEach(club => {
             if (document.getElementById('toggle-clubs').classList.contains('active')) {
                 listViewContent.innerHTML += createCourtCard(club, 'club');
+            }
+        });
+
+        pickUpGames.forEach(game => {
+            if (document.getElementById('toggle-pick-up-games').classList.contains('active')) {
+                listViewContent.innerHTML += createCourtCard(game, 'pick-up');
             }
         });
     }
