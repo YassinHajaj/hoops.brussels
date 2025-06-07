@@ -160,7 +160,7 @@
             height: 0;
             background: transparent;
             padding: 0;
-            transition: height 0.3s ease-in-out;
+            transition: none;
             z-index: 1000;
             overflow: hidden;
         }
@@ -168,6 +168,7 @@
         #menu.show {
             height: 100vh;
             padding: 20px;
+            transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .menu-toggle {
@@ -406,7 +407,7 @@
         /* Toggle buttons styles */
         .toggle-container {
             position: fixed;
-            top: 230px; /* Adjusted to be lower */
+            top: 250px; /* Adjusted to 250px */
             right: 20px;
             z-index: 1001;
             display: none;
