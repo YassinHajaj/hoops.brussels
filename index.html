@@ -22,10 +22,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Hoops Brussels">
-    <link rel="apple-touch-icon" href="logo-hoops.png">
+    <link rel="apple-touch-icon" href="images/logo-hoops.png">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon-2.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="images/favicon-2.png" sizes="32x32"/>
 
     <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
@@ -384,7 +384,7 @@
 
 <!-- Logo -->
 <div id="logo">
-    <img src="logo-hoops.png" alt="Hoops Brussels logo"/>
+    <img src="images/logo-hoops.png" alt="Hoops Brussels logo"/>
     <div class="toggle-container">
         <button id="toggle-courts" class="toggle-button active">
             <span class="toggle-status">Hide</span>
@@ -448,7 +448,7 @@
 
 <!-- Install Button -->
 <div id="install-button">
-    <img src="install-icon.svg" alt="Install"/>
+    <img src="images/install-icon.svg" alt="Install"/>
     <span id="install-text">Installer l'app</span>
 </div>
 
@@ -587,9 +587,9 @@
     let isListView = false;
 
     function createCourtCard(court, type) {
-        const icon = type === 'court' ? 'hoop-icon.png' : 
-                    type === 'multisport' ? 'multisport-icon.png' : 
-                    court.iconFileName;
+        const icon = type === 'court' ? 'images/hoop-icon.png' : 
+                    type === 'multisport' ? 'images/multisport-icon.png' : 
+                    'images/' + court.iconFileName;
         
         return `
             <div class="court-card">

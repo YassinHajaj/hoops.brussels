@@ -111,21 +111,21 @@ let courtMarkers = [];
 let clubMarkers = [];
 
 const hoopIcon = L.icon({
-  iconUrl: 'hoop-icon.png',
+  iconUrl: 'images/hoop-icon.png',
   iconSize: [50, 50],
   iconAnchor: [20, 40],
   popupAnchor: [0, -35]
 });
 
 const multiSportIcon = L.icon({
-    iconUrl: 'multisport-icon.png',
+    iconUrl: 'images/multisport-icon.png',
     iconSize: [50, 50],
     iconAnchor: [20, 40],
     popupAnchor: [0, -35]
 });
 
 const pickUpGamesIcon = L.icon({
-    iconUrl: 'pick-up-games-icon.png',
+    iconUrl: 'images/pick-up-games-icon.png',
     iconSize: [50, 50],
     iconAnchor: [20, 40],
     popupAnchor: [0, -35]
@@ -221,27 +221,28 @@ const multiSportCourts = [
   { nom: "Rue de Picardie (Evere)", coord: [50.877356016174836, 4.395265533813575], description: "Terrain multisport basket/foot" },
   { nom: "Parc Crickx (Anderlecht)", coord: [50.83615113166934, 4.320504149798774], description: "Terrain multisport basket/foot" },
   { nom: "Avenue du Gibet (Evere)", coord: [50.865080347770565, 4.423678144149052], description: "Terrain multisport basket/foot" },
+  { nom: "Parc Bruyn (Neder-Over-Heembeek)", coord: [50.908798328403094, 4.38811273785228], description: "Terrain multisport basket/foot" },
 ];
 
 const clubs = [
-  { nom: "Dino Brussels", coord: [50.864373, 4.391774], description: "<a href='https://dino.brussels/'>🧑🏻‍💻</a>", iconFileName: "dino-brussels-icon.png" },
-  { nom: "Royal Canter Schaerbeek", coord: [50.869625, 4.384862], description: "<a href='https://www.royalcanter.be/'>🧑🏻‍💻</a>", iconFileName: "royal-canter-icon.png" },
-  { nom: "Royal Excelsior Brussels", coord: [50.892988, 4.376862], description: "<a href='https://www.excelsiorbrussels.be'>🧑🏻‍💻</a>", iconFileName: "royal-excelsior-icon.png" },
-  { nom: "ULB Owls (ULB Sports)", coord: [50.8137, 4.3823], description: "<a href='http://ulbsports.eu'>🧑🏻‍💻</a>", iconFileName: "ulb-owls-icon.png" },
-  { nom: "VUB Basketball", coord: [50.8208, 4.3943], description: "<a href='http://vub.be/sport'>🧑🏻‍💻</a>", iconFileName: "vub-basketball-icon.png" },
-  { nom: "Uccle Europe Basket", coord: [50.80056, 4.338801], description: "<a href='https://uebasket.be'>🧑🏻‍💻</a>", iconFileName: "uccle-europe-icon.jpg" },
-  { nom: "Fresh Air Jette", coord: [50.883264, 4.333509], description: "<a href='http://freshairbasket.be'>🧑🏻‍💻</a>", iconFileName: "fresh-air-icon.jpg" },
-  { nom: "Royal IV Brussels", coord: [50.841654, 4.343372], description: "<a href='mailto:bcroyal4@live.be'>📨</a>", iconFileName: "royal-iv-icon.png" },
-  { nom: "Royal Maccabi Brussels", coord: [50.8073, 4.3525], description: "<a href='mailto:royalmaccabi@gmail.com'>📨</a>", iconFileName: "royal-maccabi-icon.png" },
-  { nom: "Royal Linthout BC", coord: [50.843426, 4.428382], description: "<a href='mailto:info@royallinthout.be'>📨</a>", iconFileName: "royal-linthout-icon.png" },
-  { nom: "AS Haren", coord: [50.891654, 4.420456], description: "<a href='https://www.facebook.com/asharenbasket/'>📨</a>", iconFileName: "as-haren-icon.png" },
-  { nom: "Royal Anciens 13 BC", coord: [50.854215, 4.310561], description: "<a href='mailto:anciens13bc@gmail.com'>📨</a>", iconFileName: "anciens13-icon.jpg" },
-  { nom: "Berchem BBC", coord: [50.86961, 4.286886], description: "<a href='mailto:berchembbc@gmail.com'>📨</a>", iconFileName: "berchem-bbc-icon.webp" },
-  { nom: "Molenbeek Rebels", coord: [50.86225582379745, 4.326822937579879], description: "<a href='https://molenbeekrebels.wixsite.com/molenbeekrebels/home'> 🧑🏻‍💻</a>", iconFileName: "rebels-icon.png" },
-  { nom: "Black Devils Vorst", coord: [50.80764357688078, 4.326912401986094], description: "<a href='https://www.blackdevilsvorst.be/'> 🧑🏻‍💻</a>", iconFileName: "black-devils-icon.svg" },
-  { nom: "BC Avenir Evere", coord: [50.860725671938596, 4.416413666567762], description: "<a href='https://www.avenireverebc.be/'> 🧑🏻‍💻</a>", iconFileName: "avenir-evere-icon.jpeg" },
-  { nom: "Brussels Basketball", coord: [50.89286017335025, 4.3765829134223], description: "<a href='https://www.brusselsbasketball.be/'> 🧑🏻‍💻</a>", iconFileName: "brussels-icon.png" },
-  { nom: "BC Polaris Brussel", coord: [50.86485658717384, 4.357356284446961], description: "<a href='https://sport.brussels/clubs/polaris-brussel-basketball-sport-club//'> 🧑🏻‍💻</a>", iconFileName: "polaris-icon.png" },
+  { nom: "Dino Brussels", coord: [50.864373, 4.391774], description: "<a href='https://dino.brussels/'>🧑🏻‍💻</a>", iconFileName: "images/dino-brussels-icon.png" },
+  { nom: "Royal Canter Schaerbeek", coord: [50.869625, 4.384862], description: "<a href='https://www.royalcanter.be/'>🧑🏻‍💻</a>", iconFileName: "images/royal-canter-icon.png" },
+  { nom: "Royal Excelsior Brussels", coord: [50.892988, 4.376862], description: "<a href='https://www.excelsiorbrussels.be'>🧑🏻‍💻</a>", iconFileName: "images/royal-excelsior-icon.png" },
+  { nom: "ULB Owls (ULB Sports)", coord: [50.8137, 4.3823], description: "<a href='http://ulbsports.eu'>🧑🏻‍💻</a>", iconFileName: "images/ulb-owls-icon.png" },
+  { nom: "VUB Basketball", coord: [50.8208, 4.3943], description: "<a href='http://vub.be/sport'>🧑🏻‍💻</a>", iconFileName: "images/vub-basketball-icon.png" },
+  { nom: "Uccle Europe Basket", coord: [50.80056, 4.338801], description: "<a href='https://uebasket.be'>🧑🏻‍💻</a>", iconFileName: "images/uccle-europe-icon.jpg" },
+  { nom: "Fresh Air Jette", coord: [50.883264, 4.333509], description: "<a href='http://freshairbasket.be'>🧑🏻‍💻</a>", iconFileName: "images/fresh-air-icon.jpg" },
+  { nom: "Royal IV Brussels", coord: [50.841654, 4.343372], description: "<a href='mailto:bcroyal4@live.be'>📨</a>", iconFileName: "images/royal-iv-icon.png" },
+  { nom: "Royal Maccabi Brussels", coord: [50.8073, 4.3525], description: "<a href='mailto:royalmaccabi@gmail.com'>📨</a>", iconFileName: "images/royal-maccabi-icon.png" },
+  { nom: "Royal Linthout BC", coord: [50.843426, 4.428382], description: "<a href='mailto:info@royallinthout.be'>📨</a>", iconFileName: "images/royal-linthout-icon.png" },
+  { nom: "AS Haren", coord: [50.891654, 4.420456], description: "<a href='https://www.facebook.com/asharenbasket/'>📨</a>", iconFileName: "images/as-haren-icon.png" },
+  { nom: "Royal Anciens 13 BC", coord: [50.854215, 4.310561], description: "<a href='mailto:anciens13bc@gmail.com'>📨</a>", iconFileName: "images/anciens13-icon.jpg" },
+  { nom: "Berchem BBC", coord: [50.86961, 4.286886], description: "<a href='mailto:berchembbc@gmail.com'>📨</a>", iconFileName: "images/berchem-bbc-icon.webp" },
+  { nom: "Molenbeek Rebels", coord: [50.86225582379745, 4.326822937579879], description: "<a href='https://molenbeekrebels.wixsite.com/molenbeekrebels/home'> 🧑🏻‍💻</a>", iconFileName: "images/rebels-icon.png" },
+  { nom: "Black Devils Vorst", coord: [50.80764357688078, 4.326912401986094], description: "<a href='https://www.blackdevilsvorst.be/'> 🧑🏻‍💻</a>", iconFileName: "images/black-devils-icon.svg" },
+  { nom: "BC Avenir Evere", coord: [50.860725671938596, 4.416413666567762], description: "<a href='https://www.avenireverebc.be/'> 🧑🏻‍💻</a>", iconFileName: "images/avenir-evere-icon.jpeg" },
+  { nom: "Brussels Basketball", coord: [50.89286017335025, 4.3765829134223], description: "<a href='https://www.brusselsbasketball.be/'> 🧑🏻‍💻</a>", iconFileName: "images/brussels-icon.png" },
+  { nom: "BC Polaris Brussel", coord: [50.86485658717384, 4.357356284446961], description: "<a href='https://sport.brussels/clubs/polaris-brussel-basketball-sport-club//'> 🧑🏻‍💻</a>", iconFileName: "images/polaris-icon.png" },
 ];
 
 const pickUpGames = [
@@ -263,7 +264,7 @@ function createMarkers() {
     const marker = L.marker(t.coord, { icon: hoopIcon })
       .bindPopup(`<div class='court-popup'>
         <div class='court-popup-header'>
-          <img src='hoop-icon.png' alt='Basketball Court' class='court-popup-icon'>
+          <img src='images/hoop-icon.png' alt='Basketball Court' class='court-popup-icon'>
           <h3 class='court-popup-title'>${t.nom}</h3>
         </div>
         <div class='court-popup-content'>
@@ -280,7 +281,7 @@ function createMarkers() {
     const marker = L.marker(t.coord, { icon: multiSportIcon })
       .bindPopup(`<div class='court-popup'>
         <div class='court-popup-header'>
-          <img src='multisport-icon.png' alt='Multisport Court' class='court-popup-icon'>
+          <img src='images/multisport-icon.png' alt='Multisport Court' class='court-popup-icon'>
           <h3 class='court-popup-title'>${t.nom}</h3>
         </div>
         <div class='court-popup-content'>
@@ -321,7 +322,7 @@ function createMarkers() {
     const marker = L.marker(p.coord, { icon: pickUpGamesIcon })
       .bindPopup(`<div class='court-popup'>
         <div class='court-popup-header'>
-          <img src='pick-up-games-icon.png' alt='Pick Up Game' class='court-popup-icon'>
+          <img src='images/pick-up-games-icon.png' alt='Pick Up Game' class='court-popup-icon'>
           <h3 class='court-popup-title'>${p.nom}</h3>
         </div>
         <div class='court-popup-content'>
