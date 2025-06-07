@@ -233,8 +233,6 @@ function createMarkers() {
     });
 }
 
-createMarkers();
-
 document.getElementById('toggle-courts').addEventListener('click', (e) => {
     const button = e.currentTarget;
     button.classList.toggle('active');
@@ -242,13 +240,13 @@ document.getElementById('toggle-courts').addEventListener('click', (e) => {
     const isActive = button.classList.contains('active');
 
     if (isActive) {
-      courtMarkers.forEach(marker => courtClusterGroup.addLayer(marker));
+        courtMarkers.forEach(marker => courtClusterGroup.addLayer(marker));
     }
 
     const statusSpan = button.querySelector('.toggle-status');
     statusSpan.textContent = isActive ?
-        translations[currentLang].hideText :
-        translations[currentLang].showText;
+        translations[window.currentLang].hideText :
+        translations[window.currentLang].showText;
 });
 
 document.getElementById('toggle-multisport-courts').addEventListener('click', (e) => {
@@ -263,8 +261,8 @@ document.getElementById('toggle-multisport-courts').addEventListener('click', (e
 
     const statusSpan = button.querySelector('.toggle-status');
     statusSpan.textContent = isActive ?
-        translations[currentLang].hideText :
-        translations[currentLang].showText;
+        translations[window.currentLang].hideText :
+        translations[window.currentLang].showText;
 });
 
 document.getElementById('toggle-clubs').addEventListener('click', (e) => {
@@ -274,13 +272,13 @@ document.getElementById('toggle-clubs').addEventListener('click', (e) => {
     const isActive = button.classList.contains('active');
 
     if (isActive) {
-      clubMarkers.forEach(marker => clubClusterGroup.addLayer(marker));
+        clubMarkers.forEach(marker => clubClusterGroup.addLayer(marker));
     }
 
     const statusSpan = button.querySelector('.toggle-status');
     statusSpan.textContent = isActive ?
-      translations[currentLang].hideText :
-      translations[currentLang].showText;
+        translations[window.currentLang].hideText :
+        translations[window.currentLang].showText;
 });
 
 document.getElementById('toggle-pick-up-games').addEventListener('click', (e) => {
@@ -290,11 +288,14 @@ document.getElementById('toggle-pick-up-games').addEventListener('click', (e) =>
     const isActive = button.classList.contains('active');
 
     if (isActive) {
-      pickUpGamesMarkers.forEach(marker => pickUpGamesClusterGroup.addLayer(marker));
+        pickUpGamesMarkers.forEach(marker => pickUpGamesClusterGroup.addLayer(marker));
     }
 
     const statusSpan = button.querySelector('.toggle-status');
     statusSpan.textContent = isActive ?
-      translations[currentLang].hideText :
-      translations[currentLang].showText;
+        translations[window.currentLang].hideText :
+        translations[window.currentLang].showText;
 });
+
+// Initialize markers when the page loads
+createMarkers();
