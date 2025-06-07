@@ -4,109 +4,6 @@ const map = L.map('map', {
 
 L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-// Add geolocation control
-const locationButton = L.control({ position: 'bottomleft' });
-
-locationButton.onAdd = function(map) {
-  const div = L.DomUtil.create('div', 'location-button');
-  div.innerHTML = `
-    <button class="location-btn" title="Find my location">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <circle cx="12" cy="12" r="4"></circle>
-      </svg>
-    </button>
-  `;
-  
-  div.onclick = function() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          const userLat = position.coords.latitude;
-          const userLng = position.coords.longitude;
-          
-          // Create a marker for user's location
-          const userMarker = L.marker([userLat, userLng], {
-            icon: L.divIcon({
-              className: 'user-location-marker',
-              html: '<div class="user-location-dot"></div>',
-              iconSize: [12, 12]
-            })
-          }).addTo(map);
-          
-          // Center map on user's location
-          map.setView([userLat, userLng], 14);
-          
-          // Add a circle to show accuracy
-          const accuracyCircle = L.circle([userLat, userLng], {
-            radius: position.coords.accuracy / 2,
-            color: '#1d3e53',
-            fillColor: '#1d3e53',
-            fillOpacity: 0.1
-          }).addTo(map);
-          
-          // Remove previous markers and circles after 5 seconds
-          setTimeout(() => {
-            map.removeLayer(userMarker);
-            map.removeLayer(accuracyCircle);
-          }, 5000);
-        },
-        function(error) {
-          console.error('Error getting location:', error);
-          alert('Unable to get your location. Please check your location settings.');
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0
-        }
-      );
-    } else {
-      alert('Geolocation is not supported by your browser');
-    }
-  };
-  
-  return div;
-};
-
-locationButton.addTo(map);
-
-// Add styles for the location button and user marker
-const style = document.createElement('style');
-style.textContent = `
-  .location-button {
-    margin-bottom: 10px;
-  }
-  
-  .location-btn {
-    background: white;
-    border: none;
-    border-radius: 4px;
-    width: 36px;
-    height: 36px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-    color: #1d3e53;
-  }
-  
-  .location-btn:hover {
-    background: #f8f8f8;
-  }
-  
-  .user-location-dot {
-    width: 12px;
-    height: 12px;
-    background: #1d3e53;
-    border-radius: 50%;
-    border: 2px solid white;
-    box-shadow: 0 0 0 2px #1d3e53;
-  }
-`;
-document.head.appendChild(style);
-
 let courtMarkers = [];
 let clubMarkers = [];
 
@@ -136,7 +33,7 @@ const detailOverlay = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y
 lightBase.addTo(map);
 
 map.on('zoomend', () => {
-  if (map.getZoom() >= 15) {
+  if (map.getZoom() >= 16) {
     if (!map.hasLayer(detailOverlay)) map.addLayer(detailOverlay);
   } else {
     if (map.hasLayer(detailOverlay)) map.removeLayer(detailOverlay);

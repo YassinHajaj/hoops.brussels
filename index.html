@@ -36,6 +36,11 @@
         html, body { margin: 0; padding: 0; height: 100%; }
         #map { width: 100%; height: 100vh; }
 
+        /* Remove old location button styles */
+        .leaflet-control-locate {
+            display: none !important;
+        }
+
         /* List View Styles */
         #list-view {
             position: absolute;
@@ -151,6 +156,104 @@
           height: 100px;
           width: 100%;
           object-fit: contain;
+        }
+
+        .language-toggle {
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%;
+        }
+
+        .toggle-btn {
+            background: rgba(255, 255, 255, 0.65);
+            color: #1d3e53;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .lang-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            margin-top: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1002;
+        }
+
+        .lang-options.show {
+            display: block;
+        }
+
+        .lang-option {
+            display: block;
+            width: 100%;
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            color: #1d3e53;
+            font-size: 14px;
+        }
+
+        .lang-option:hover {
+            background: rgba(29, 62, 83, 0.1);
+        }
+
+        .lang-option:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .lang-option:last-child {
+            border-radius: 0 0 8px 8px;
+        }
+
+        .filter-toggle {
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%;
+        }
+
+        .filter-toggle-btn {
+            background: rgba(255, 255, 255, 0.65);
+            color: #1d3e53;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .filter-icon {
+            font-size: 16px;
         }
 
         .suggest-toggle {
@@ -507,6 +610,33 @@
         #lang-switcher {
             display: none;
         }
+
+        .location-toggle {
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%;
+        }
+
+        .location-toggle-btn {
+            background: rgba(255, 255, 255, 0.65);
+            color: #1d3e53;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
+        }
+
+        .location-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 <body>
@@ -530,16 +660,22 @@
             <button class="lang-option" data-lang="en">English</button>
         </div>
     </div>
-    <div class="filter-toggle">
-        <button id="filter-toggle-btn" class="filter-toggle-btn">
-            <span class="filter-icon">🔍</span>
-            <span class="filter-text">Filters</span>
-        </button>
-    </div>
     <div class="suggest-toggle">
         <button id="suggest-toggle-btn" class="suggest-toggle-btn">
             <span class="suggest-icon">✉️</span>
             <span class="suggest-text">Suggest a court</span>
+        </button>
+    </div>
+    <div class="location-toggle">
+        <button id="location-toggle-btn" class="location-toggle-btn">
+            <span class="location-icon">📍</span>
+            <span class="location-text">My Location</span>
+        </button>
+    </div>
+    <div class="filter-toggle">
+        <button id="filter-toggle-btn" class="filter-toggle-btn">
+            <span class="filter-icon">🔍</span>
+            <span class="filter-text">Filters</span>
         </button>
     </div>
     <div id="filters-container" class="toggle-container">
@@ -561,19 +697,6 @@
         </button>
     </div>
 </div>
-
-<!-- View Toggle Button
-<button id="view-toggle" title="Switch to list view">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="8" y1="6" x2="21" y2="6"></line>
-        <line x1="8" y1="12" x2="21" y2="12"></line>
-        <line x1="8" y1="18" x2="21" y2="18"></line>
-        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-    </svg>
-    <span>List View</span>
-</button>-->
 
 <!-- Carte -->
 <div id="map"></div>
@@ -615,7 +738,8 @@
         filterText: "Filtres",
         languageText: "Langue",
         flag: "🇫🇷",
-        suggestText: "Suggérer un terrain"
+        suggestText: "Suggérer un terrain",
+        locationText: "Autour de moi"
       },
       nl: {
         suggestIntro: "💡 Ken je een terrein dat ontbreekt?",
@@ -631,7 +755,8 @@
         filterText: "Filters",
         languageText: "Taal",
         flag: "🇳🇱",
-        suggestText: "Stel een terrein voor"
+        suggestText: "Stel een terrein voor",
+        locationText: "Rondom mij"
       },
       en: {
         suggestIntro: "💡 Do you know a missing court?",
@@ -647,7 +772,8 @@
         filterText: "Filters",
         languageText: "Language",
         flag: "🇬🇧",
-        suggestText: "Suggest a court"
+        suggestText: "Suggest a court",
+        locationText: "Around me"
       }
     };
 
@@ -681,6 +807,12 @@
         const suggestText = document.querySelector('.suggest-text');
         if (suggestText) {
             suggestText.textContent = t.suggestText;
+        }
+
+        // Update location text
+        const locationText = document.querySelector('.location-text');
+        if (locationText) {
+            locationText.textContent = t.locationText;
         }
 
         // Update language button with just the flag
@@ -740,6 +872,20 @@
             suggestToggleBtn.addEventListener('click', function() {
                 const t = translations[window.currentLang];
                 window.location.href = `mailto:contact@hoops.brussels?subject=${t.mailSubject}&body=${t.mailBody}`;
+            });
+        }
+
+        // Location button functionality
+        const locationToggleBtn = document.getElementById('location-toggle-btn');
+        if (locationToggleBtn) {
+            locationToggleBtn.addEventListener('click', function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        map.setView([position.coords.latitude, position.coords.longitude], 12);
+                    }, function(error) {
+                        console.error("Error getting location:", error);
+                    });
+                }
             });
         }
 
