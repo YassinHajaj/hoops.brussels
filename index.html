@@ -144,10 +144,13 @@
           padding: 6px 10px;
           border-radius: 10px;
           box-shadow: 0 0 6px rgba(0,0,0,0.2);
+          width: 200px;
         }
 
         #logo img {
           height: 100px;
+          width: 100%;
+          object-fit: contain;
         }
 
         #suggestion-box {
@@ -421,12 +424,13 @@
             }
         }
 
-        .language-toggle {
+        .language-toggle, .filter-toggle {
             margin-bottom: 10px;
             position: relative;
+            width: 100%;
         }
 
-        .toggle-btn {
+        .toggle-btn, .filter-toggle-btn {
             background: rgba(255, 255, 255, 0.65);
             color: #1d3e53;
             border: none;
@@ -440,9 +444,10 @@
             width: 100%;
             justify-content: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
         }
 
-        .toggle-btn:hover {
+        .toggle-btn:hover, .filter-toggle-btn:hover {
             background: rgba(255, 255, 255, 0.8);
         }
 
@@ -638,24 +643,11 @@
       }
     };
 
-    // Add filter toggle functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const filterToggleBtn = document.getElementById('filter-toggle-btn');
-        const filtersContainer = document.getElementById('filters-container');
-        
-        if (filterToggleBtn && filtersContainer) {
-            filterToggleBtn.addEventListener('click', function() {
-                filtersContainer.classList.toggle('show');
-            });
-        }
-    });
-
     // Add language toggle functionality
     document.addEventListener('DOMContentLoaded', function() {
+        // Initialize language toggle
         const langToggleBtn = document.getElementById('lang-toggle-btn');
         const langOptions = document.getElementById('lang-options');
-        const filterToggleBtn = document.getElementById('filter-toggle-btn');
-        const filtersContainer = document.getElementById('filters-container');
         
         if (langToggleBtn && langOptions) {
             langToggleBtn.addEventListener('click', function() {
@@ -679,52 +671,106 @@
             });
         }
 
+        // Initialize filter toggle
+        const filterToggleBtn = document.getElementById('filter-toggle-btn');
+        const filtersContainer = document.getElementById('filters-container');
+        
         if (filterToggleBtn && filtersContainer) {
             filterToggleBtn.addEventListener('click', function() {
                 filtersContainer.classList.toggle('show');
             });
         }
+
+        // Initialize view toggle
+        const viewToggle = document.getElementById('view-toggle');
+        const mapView = document.getElementById('map');
+        const listView = document.getElementById('list-view');
+        const listViewContent = document.querySelector('.list-view-content');
+        let isListView = false;
+
+        if (viewToggle) {
+            viewToggle.addEventListener('click', () => {
+                isListView = !isListView;
+                if (isListView) {
+                    mapView.style.display = 'none';
+                    listView.style.display = 'block';
+                    viewToggle.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                            <line x1="9" y1="21" x2="9" y2="9"></line>
+                        </svg>
+                        <span>Map View</span>
+                    `;
+                    updateListView();
+                } else {
+                    mapView.style.display = 'block';
+                    listView.style.display = 'none';
+                    viewToggle.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        <span>List View</span>
+                    `;
+                }
+            });
+        }
+
+        // Initialize toggle buttons
+        document.querySelectorAll('.toggle-button').forEach(button => {
+            button.addEventListener('click', () => {
+                if (isListView) {
+                    updateListView();
+                }
+            });
+        });
+
+        // Set initial language
+        const browserLang = navigator.language.startsWith("nl") ? "nl" :
+                           navigator.language.startsWith("en") ? "en" : "fr";
+        updateLanguage(browserLang);
     });
 
     function updateLanguage(lang) {
-      const t = translations[lang];
-      document.getElementById("suggest-intro").textContent = t.suggestIntro;
-      const button = document.getElementById("suggest-button");
-      button.textContent = t.suggestBtn;
-      button.href = `mailto:contact@hoops.brussels?subject=${t.mailSubject}&body=${t.mailBody}`;
-      
-      // Update toggle button texts
-      document.querySelector('.courts-text').textContent = t.courtsText;
-      document.querySelector('.clubs-text').textContent = t.clubsText;
-      document.querySelector('.multisport-courts-text').textContent = t.multisportCourtsText;
-      
-      // Update show/hide texts
-      document.querySelectorAll('.toggle-button').forEach(button => {
-        const statusSpan = button.querySelector('.toggle-status');
-        statusSpan.textContent = button.classList.contains('active') ? t.hideText : t.showText;
-      });
+        const t = translations[lang];
+        document.getElementById("suggest-intro").textContent = t.suggestIntro;
+        const button = document.getElementById("suggest-button");
+        button.textContent = t.suggestBtn;
+        button.href = `mailto:contact@hoops.brussels?subject=${t.mailSubject}&body=${t.mailBody}`;
+        
+        // Update toggle button texts
+        document.querySelector('.courts-text').textContent = t.courtsText;
+        document.querySelector('.clubs-text').textContent = t.clubsText;
+        document.querySelector('.multisport-courts-text').textContent = t.multisportCourtsText;
+        
+        // Update show/hide texts
+        document.querySelectorAll('.toggle-button').forEach(button => {
+            const statusSpan = button.querySelector('.toggle-status');
+            statusSpan.textContent = button.classList.contains('active') ? t.hideText : t.showText;
+        });
 
-      // Update filter text
-      const filterText = document.querySelector('.filter-text');
-      if (filterText) {
-          filterText.textContent = t.filterText;
-      }
+        // Update filter text
+        const filterText = document.querySelector('.filter-text');
+        if (filterText) {
+            filterText.textContent = t.filterText;
+        }
 
-      // Update language button text
-      const langText = document.querySelector('.lang-text');
-      if (langText) {
-          langText.textContent = t.languageText;
-      }
+        // Update language button text
+        const langText = document.querySelector('.lang-text');
+        if (langText) {
+            langText.textContent = t.languageText;
+        }
     }
 
-    const browserLang = navigator.language.startsWith("nl") ? "nl" :
-                        navigator.language.startsWith("en") ? "en" : "fr";
-    document.getElementById("lang-switcher").value = browserLang;
-    updateLanguage(browserLang);
-
-    document.getElementById("lang-switcher").addEventListener("change", (e) => {
-      updateLanguage(e.target.value);
-    });
+    // Add language text to translations
+    translations.fr.languageText = 'Langue';
+    translations.nl.languageText = 'Taal';
+    translations.en.languageText = 'Language';
 
     // Register Service Worker
     if ('serviceWorker' in navigator) {
@@ -780,38 +826,6 @@
     // Set initial install text
     updateInstallText(browserLang);
 
-    // Add view toggle functionality
-    const viewToggle = document.getElementById('view-toggle');
-    const mapView = document.getElementById('map');
-    const listView = document.getElementById('list-view');
-    const listViewContent = document.querySelector('.list-view-content');
-    let isListView = false;
-
-    function createCourtCard(court, type) {
-        const icon = type === 'court' ? 'images/hoop-icon.png' : 
-                    type === 'multisport' ? 'images/multisport-icon.png' : 
-                    'images/' + court.iconFileName;
-        
-        return `
-            <div class="court-card">
-                <div class="court-card-header">
-                    <img src="${icon}" alt="${court.nom}" class="court-card-icon">
-                    <h3 class="court-card-title">${court.nom}</h3>
-                </div>
-                <div class="court-card-content">
-                    <p class="court-card-description">${court.description}</p>
-                    ${court.description.includes('href') ? '' : 
-                        `<a href="https://www.google.com/maps?q=${court.coord[0]},${court.coord[1]}" 
-                           target="_blank" 
-                           class="court-card-link">
-                            View on Google Maps
-                        </a>`
-                    }
-                </div>
-            </div>
-        `;
-    }
-
     function updateListView() {
         listViewContent.innerHTML = '';
         
@@ -842,46 +856,6 @@
             }
         });
     }
-
-    viewToggle.addEventListener('click', () => {
-        isListView = !isListView;
-        if (isListView) {
-            mapView.style.display = 'none';
-            listView.style.display = 'block';
-            viewToggle.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="3" y1="9" x2="21" y2="9"></line>
-                    <line x1="9" y1="21" x2="9" y2="9"></line>
-                </svg>
-                <span>Map View</span>
-            `;
-            updateListView();
-        } else {
-            mapView.style.display = 'block';
-            listView.style.display = 'none';
-            viewToggle.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="8" y1="6" x2="21" y2="6"></line>
-                    <line x1="8" y1="12" x2="21" y2="12"></line>
-                    <line x1="8" y1="18" x2="21" y2="18"></line>
-                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                </svg>
-                <span>List View</span>
-            `;
-        }
-    });
-
-    // Update list view when toggles change
-    document.querySelectorAll('.toggle-button').forEach(button => {
-        button.addEventListener('click', () => {
-            if (isListView) {
-                updateListView();
-            }
-        });
-    });
 </script>
 <script async defer data-domain="hoops.brussels" src="https://plausible.io/js/script.js"></script>
 </body>
