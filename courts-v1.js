@@ -233,72 +233,84 @@ function createMarkers() {
     });
 }
 
-document.getElementById('toggle-courts').addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent event from bubbling up
-    const button = e.currentTarget;
-    button.classList.toggle('active');
-    courtClusterGroup.clearLayers();
-    const isActive = button.classList.contains('active');
+function updateMapView() {
+    // Get all visible markers
+    const visibleMarkers = [];
+    
+    if (document.getElementById('toggle-courts').classList.contains('active')) {
+        courtMarkers.forEach(marker => visibleMarkers.push(marker));
+    }
+    
+    if (document.getElementById('toggle-multisport-courts').classList.contains('active')) {
+        multisportCourtMarkers.forEach(marker => visibleMarkers.push(marker));
+    }
+    
+    if (document.getElementById('toggle-clubs').classList.contains('active')) {
+        clubMarkers.forEach(marker => visibleMarkers.push(marker));
+    }
+    
+    if (document.getElementById('toggle-pick-up-games').classList.contains('active')) {
+        pickUpGamesMarkers.forEach(marker => visibleMarkers.push(marker));
+    }
 
+    // If there are visible markers, fit the map to show them all
+    if (visibleMarkers.length > 0) {
+        const group = L.featureGroup(visibleMarkers);
+        map.fitBounds(group.getBounds(), { padding: [50, 50] });
+    }
+}
+
+// Update the toggle button click handlers
+document.getElementById('toggle-courts').addEventListener('click', function(e) {
+    e.stopPropagation();
+    this.classList.toggle('active');
+    const isActive = this.classList.contains('active');
+    this.querySelector('.toggle-status').textContent = isActive ? translations[window.currentLang].hideText : translations[window.currentLang].showText;
+    
+    courtClusterGroup.clearLayers();
     if (isActive) {
         courtMarkers.forEach(marker => courtClusterGroup.addLayer(marker));
     }
-
-    const statusSpan = button.querySelector('.toggle-status');
-    statusSpan.textContent = isActive ?
-        translations[window.currentLang].hideText :
-        translations[window.currentLang].showText;
+    updateMapView();
 });
 
-document.getElementById('toggle-multisport-courts').addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent event from bubbling up
-    const button = e.currentTarget;
-    button.classList.toggle('active');
+document.getElementById('toggle-multisport-courts').addEventListener('click', function(e) {
+    e.stopPropagation();
+    this.classList.toggle('active');
+    const isActive = this.classList.contains('active');
+    this.querySelector('.toggle-status').textContent = isActive ? translations[window.currentLang].hideText : translations[window.currentLang].showText;
+    
     multisportCourtClusterGroup.clearLayers();
-    const isActive = button.classList.contains('active');
-
     if (isActive) {
         multisportCourtMarkers.forEach(marker => multisportCourtClusterGroup.addLayer(marker));
     }
-
-    const statusSpan = button.querySelector('.toggle-status');
-    statusSpan.textContent = isActive ?
-        translations[window.currentLang].hideText :
-        translations[window.currentLang].showText;
+    updateMapView();
 });
 
-document.getElementById('toggle-clubs').addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent event from bubbling up
-    const button = e.currentTarget;
-    button.classList.toggle('active');
+document.getElementById('toggle-clubs').addEventListener('click', function(e) {
+    e.stopPropagation();
+    this.classList.toggle('active');
+    const isActive = this.classList.contains('active');
+    this.querySelector('.toggle-status').textContent = isActive ? translations[window.currentLang].hideText : translations[window.currentLang].showText;
+    
     clubClusterGroup.clearLayers();
-    const isActive = button.classList.contains('active');
-
     if (isActive) {
         clubMarkers.forEach(marker => clubClusterGroup.addLayer(marker));
     }
-
-    const statusSpan = button.querySelector('.toggle-status');
-    statusSpan.textContent = isActive ?
-        translations[window.currentLang].hideText :
-        translations[window.currentLang].showText;
+    updateMapView();
 });
 
-document.getElementById('toggle-pick-up-games').addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent event from bubbling up
-    const button = e.currentTarget;
-    button.classList.toggle('active');
+document.getElementById('toggle-pick-up-games').addEventListener('click', function(e) {
+    e.stopPropagation();
+    this.classList.toggle('active');
+    const isActive = this.classList.contains('active');
+    this.querySelector('.toggle-status').textContent = isActive ? translations[window.currentLang].hideText : translations[window.currentLang].showText;
+    
     pickUpGamesClusterGroup.clearLayers();
-    const isActive = button.classList.contains('active');
-
     if (isActive) {
         pickUpGamesMarkers.forEach(marker => pickUpGamesClusterGroup.addLayer(marker));
     }
-
-    const statusSpan = button.querySelector('.toggle-status');
-    statusSpan.textContent = isActive ?
-        translations[window.currentLang].hideText :
-        translations[window.currentLang].showText;
+    updateMapView();
 });
 
 // Initialize markers when the page loads
