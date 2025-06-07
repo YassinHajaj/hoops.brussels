@@ -219,6 +219,8 @@ const multiSportCourts = [
   { nom: "Aumale (Anderlecht)", coord: [50.84023562388431, 4.312273839959331], description: "Terrain multisport basket/foot" },
   { nom: "Dries (Watermael-Boitsfort)", coord: [50.80218449531089, 4.3972083830671505], description: "Terrain multisport basket/foot" },
   { nom: "Rue de Picardie (Evere)", coord: [50.877356016174836, 4.395265533813575], description: "Terrain multisport basket/foot" },
+  { nom: "Parc Crickx (Anderlecht)", coord: [50.83615113166934, 4.320504149798774], description: "Terrain multisport basket/foot" },
+  { nom: "Avenue du Gibet (Evere)", coord: [50.865080347770565, 4.423678144149052], description: "Terrain multisport basket/foot" },
 ];
 
 const clubs = [
