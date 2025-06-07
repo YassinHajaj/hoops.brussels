@@ -119,6 +119,7 @@ const multiSportCourts = [
   { nom: "Parc Crickx (Anderlecht)", coord: [50.83615113166934, 4.320504149798774], description: "Terrain multisport basket/foot" },
   { nom: "Avenue du Gibet (Evere)", coord: [50.865080347770565, 4.423678144149052], description: "Terrain multisport basket/foot" },
   { nom: "Parc Bruyn (Neder-Over-Heembeek)", coord: [50.908798328403094, 4.38811273785228], description: "Terrain multisport basket/foot" },
+  { nom: "Square Jacques Brel (Bruxelles-Ville)", coord: [50.851474448133715, 4.343261896617027], description: "Terrain multisport basket/foot" },
 ];
 
 const clubs = [
