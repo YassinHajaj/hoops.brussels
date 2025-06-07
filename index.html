@@ -373,6 +373,53 @@
             width: 20px;
             height: 20px;
         }
+
+        .filter-toggle {
+            display: none;
+            margin-bottom: 10px;
+        }
+
+        .filter-toggle-btn {
+            background: rgba(255, 255, 255, 0.65);
+            color: #1d3e53;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .filter-icon {
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .filter-toggle {
+                display: block;
+            }
+
+            .toggle-container {
+                display: none;
+            }
+
+            .toggle-container.show {
+                display: flex;
+            }
+
+            .toggle-button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -385,7 +432,13 @@
 <!-- Logo -->
 <div id="logo">
     <img src="images/logo-hoops.png" alt="Hoops Brussels logo"/>
-    <div class="toggle-container">
+    <div class="filter-toggle">
+        <button id="filter-toggle-btn" class="filter-toggle-btn">
+            <span class="filter-icon">🔍</span>
+            <span class="filter-text">Filters</span>
+        </button>
+    </div>
+    <div id="filters-container" class="toggle-container">
         <button id="toggle-courts" class="toggle-button active">
             <span class="toggle-status">Hide</span>
             <span class="courts-text">Courts</span>
@@ -469,7 +522,8 @@
         multisportCourtsText: "Terrains Multisports",
         showText: "Afficher",
         hideText: "Masquer",
-        pickUpGamesText: "Pick-Up Games"
+        pickUpGamesText: "Pick-Up Games",
+        filterText: "Filtres"
       },
       nl: {
         suggestIntro: "💡 Ken je een terrein dat ontbreekt?",
@@ -481,7 +535,8 @@
         multisportCourtsText: "Multisportterreinen",
         showText: "Toon",
         hideText: "Verberg",
-        pickUpGamesText: "Pick-Up Games"
+        pickUpGamesText: "Pick-Up Games",
+        filterText: "Filters"
       },
       en: {
         suggestIntro: "💡 Do you know a missing court?",
@@ -493,9 +548,22 @@
         multisportCourtsText: "Multisport Courts",
         showText: "Show",
         hideText: "Hide",
-        pickUpGamesText: "Pick-Up Games"
+        pickUpGamesText: "Pick-Up Games",
+        filterText: "Filters"
       }
     };
+
+    // Add filter toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterToggleBtn = document.getElementById('filter-toggle-btn');
+        const filtersContainer = document.getElementById('filters-container');
+        
+        if (filterToggleBtn && filtersContainer) {
+            filterToggleBtn.addEventListener('click', function() {
+                filtersContainer.classList.toggle('show');
+            });
+        }
+    });
 
     function updateLanguage(lang) {
       const t = translations[lang];
@@ -514,6 +582,12 @@
         const statusSpan = button.querySelector('.toggle-status');
         statusSpan.textContent = button.classList.contains('active') ? t.hideText : t.showText;
       });
+
+      // Update filter text
+      const filterText = document.querySelector('.filter-text');
+      if (filterText) {
+          filterText.textContent = t.filterText;
+      }
     }
 
     const browserLang = navigator.language.startsWith("nl") ? "nl" :
