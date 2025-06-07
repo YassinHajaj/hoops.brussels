@@ -218,6 +218,7 @@ const multiSportCourts = [
   { nom: "Agora Fécondité (Anderlecht)", coord: [50.83816303519733, 4.27641952661947], description: "Terrain multisport basket/foot" },
   { nom: "Aumale (Anderlecht)", coord: [50.84023562388431, 4.312273839959331], description: "Terrain multisport basket/foot" },
   { nom: "Dries (Watermael-Boitsfort)", coord: [50.80218449531089, 4.3972083830671505], description: "Terrain multisport basket/foot" },
+  { nom: "Rue de Picardie (Evere)", coord: [50.877356016174836, 4.395265533813575], description: "Terrain multisport basket/foot" },
 ];
 
 const clubs = [
