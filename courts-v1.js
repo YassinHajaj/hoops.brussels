@@ -349,7 +349,6 @@ document.getElementById('toggle-courts').addEventListener('click', (e) => {
     }
 
     const statusSpan = button.querySelector('.toggle-status');
-    const currentLang = document.getElementById('lang-switcher').value;
     statusSpan.textContent = isActive ?
         translations[currentLang].hideText :
         translations[currentLang].showText;
@@ -366,7 +365,6 @@ document.getElementById('toggle-multisport-courts').addEventListener('click', (e
     }
 
     const statusSpan = button.querySelector('.toggle-status');
-    const currentLang = document.getElementById('lang-switcher').value;
     statusSpan.textContent = isActive ?
         translations[currentLang].hideText :
         translations[currentLang].showText;
@@ -383,7 +381,6 @@ document.getElementById('toggle-clubs').addEventListener('click', (e) => {
     }
 
     const statusSpan = button.querySelector('.toggle-status');
-    const currentLang = document.getElementById('lang-switcher').value;
     statusSpan.textContent = isActive ?
       translations[currentLang].hideText :
       translations[currentLang].showText;
@@ -400,7 +397,6 @@ document.getElementById('toggle-pick-up-games').addEventListener('click', (e) =>
     }
 
     const statusSpan = button.querySelector('.toggle-status');
-    const currentLang = document.getElementById('lang-switcher').value;
     statusSpan.textContent = isActive ?
       translations[currentLang].hideText :
       translations[currentLang].showText;
