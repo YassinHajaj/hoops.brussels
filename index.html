@@ -140,89 +140,91 @@
             text-decoration: underline;
         }
 
-        #logo {
-          position: fixed;
-          top: 0;
-          right: 0;
-          width: 250px;
-          height: 0;
-          background: transparent;
-          padding: 0;
-          box-shadow: none;
-          transition: height 0.3s ease-in-out;
-          z-index: 1000;
-          overflow: hidden;
+        #logo-container {
+            position: fixed;
+            top: -15px;
+            left: 20px;
+            z-index: 1001;
         }
 
-        #logo.show {
-          height: auto;
-          padding: 20px;
+        #logo-container img {
+            width: 120px;
+            height: auto;
         }
 
-        #logo img {
-          width: 80%;
-          height: auto;
-          max-height: 50px;
-          object-fit: contain;
-          margin: 0 auto 20px;
-          display: block;
+        #menu {
+            position: fixed;
+            top: 50px;
+            right: 0;
+            width: 250px;
+            height: 0;
+            background: transparent;
+            padding: 0;
+            transition: height 0.3s ease-in-out;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        #menu.show {
+            height: 100vh;
+            padding: 20px;
         }
 
         .menu-toggle {
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          background: white;
-          border: none;
-          border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          font-size: 20px;
-          cursor: pointer;
-          z-index: 1001;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-          transition: all 0.3s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .menu-toggle:hover {
-          background: #f8f8f8;
-          transform: scale(1.05);
+            background: #f8f8f8;
+            transform: scale(1.05);
         }
 
         .menu-toggle.active {
-          transform: rotate(180deg);
+            transform: rotate(180deg);
         }
 
         .menu-toggle.active span {
-          display: none;
+            display: none;
         }
 
         .menu-toggle.active::before {
-          content: "×";
-          font-size: 24px;
+            content: "×";
+            font-size: 24px;
         }
 
         .close-menu {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          background: none;
-          border: none;
-          font-size: 24px;
-          cursor: pointer;
-          color: #666;
-          transition: color 0.3s ease;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
         }
 
         .close-menu:hover {
-          color: #333;
+            color: #333;
         }
 
         .menu-content {
-          margin-top: 20px;
+            margin-top: 20px;
         }
 
         .language-toggle {
@@ -351,123 +353,123 @@
         }
 
         #suggestion-box {
-          display: none;
+            display: none;
         }
 
         #suggest-button {
-          display: none;
+            display: none;
         }
 
         #suggest-button:hover {
-          display: none;
+            display: none;
         }
 
         #install-button {
-          position: absolute;
-          bottom: 10px;
-          left: 10px;
-          background: white;
-          padding: 12px 16px;
-          border-radius: 8px;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-          z-index: 1001;
-          font-family: sans-serif;
-          text-align: center;
-          display: none;
-          cursor: pointer;
-          color: #1d3e53;
-          text-decoration: none;
-          font-weight: bold;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            z-index: 1001;
+            font-family: sans-serif;
+            text-align: center;
+            display: none;
+            cursor: pointer;
+            color: #1d3e53;
+            text-decoration: none;
+            font-weight: bold;
         }
 
         #install-button:hover {
-          background-color: #f0f0f0;
+            background-color: #f0f0f0;
         }
 
         #install-button img {
-          width: 24px;
-          height: 24px;
-          vertical-align: middle;
-          margin-right: 8px;
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 8px;
         }
 
         #lang-switcher {
-          position: absolute;
-          top: 10px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 1001;
-          padding: 6px;
-          font-size: 14px;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001;
+            padding: 6px;
+            font-size: 14px;
         }
 
         /* Toggle buttons styles */
         .toggle-container {
-          position: fixed;
-          top: 280px; /* Adjusted to align with the filter button */
-          right: 20px;
-          z-index: 1001;
-          display: none;
-          flex-direction: column;
-          gap: 8px;
-          background: white;
-          padding: 10px;
-          border-radius: 10px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          opacity: 0;
-          transform: translateY(-10px);
-          visibility: hidden;
-          transition: all 0.3s ease;
-          width: 200px;
+            position: fixed;
+            top: 230px; /* Adjusted to be lower */
+            right: 20px;
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(-10px);
+            visibility: hidden;
+            transition: all 0.3s ease;
+            width: 200px;
         }
 
         .toggle-container.show {
-          display: flex;
-          opacity: 1;
-          transform: translateY(0);
-          visibility: visible;
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
         }
 
         .toggle-button {
-          background: white;
-          border: none;
-          padding: 4px 12px;
-          border-radius: 20px;
-          cursor: pointer;
-          font-size: 14px;
-          color: #666;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          transition: all 0.2s ease;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          min-width: 80px;
-          justify-content: center;
-          white-space: nowrap;
-          height: 28px;
+            background: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 80px;
+            justify-content: center;
+            white-space: nowrap;
+            height: 28px;
         }
 
         .toggle-button:hover {
-          background: #f8f8f8;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            background: #f8f8f8;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         .toggle-button.active {
-          background: #1d3e53;
-          color: white;
+            background: #1d3e53;
+            color: white;
         }
 
         .toggle-button.active:hover {
-          background: #2a5672;
+            background: #2a5672;
         }
 
         .toggle-button img {
-          width: 16px;
-          height: 16px;
+            width: 16px;
+            height: 16px;
         }
 
         .toggle-button.active img {
-          opacity: 1;
+            opacity: 1;
         }
 
         /* Popup Styles */
@@ -712,8 +714,12 @@
 <!-- End Google Tag Manager (noscript) -->
 
 <!-- Logo -->
-<div id="logo">
+<div id="logo-container">
     <img src="images/logo-hoops.png" alt="Hoops Brussels logo"/>
+</div>
+
+<!-- Menu -->
+<div id="menu">
     <div class="language-toggle">
         <button id="lang-toggle-btn" class="toggle-btn">
             <span class="lang-icon">🌐</span>
@@ -975,17 +981,17 @@
         menuToggle.innerHTML = '<span>☰</span>';
         document.body.appendChild(menuToggle);
 
-        const logo = document.getElementById('logo');
+        const menu = document.getElementById('menu');
         
         menuToggle.addEventListener('click', function() {
-            logo.classList.toggle('show');
+            menu.classList.toggle('show');
             menuToggle.classList.toggle('active');
         });
 
         // Close menu when clicking outside
         document.addEventListener('click', function(event) {
-            if (!logo.contains(event.target) && !menuToggle.contains(event.target)) {
-                logo.classList.remove('show');
+            if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+                menu.classList.remove('show');
                 menuToggle.classList.remove('active');
             }
         });
