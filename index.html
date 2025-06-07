@@ -153,32 +153,43 @@
           object-fit: contain;
         }
 
+        .suggest-toggle {
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%;
+        }
+
+        .suggest-toggle-btn {
+            background: rgba(255, 255, 255, 0.65);
+            color: #1d3e53;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
+        }
+
+        .suggest-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
         #suggestion-box {
-          position: absolute;
-          bottom: 10px;
-          right: 10px;
-          background: white;
-          padding: 12px 16px;
-          border-radius: 8px;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-          z-index: 1001;
-          font-family: sans-serif;
-          text-align: center;
+          display: none;
         }
 
         #suggest-button {
-          display: inline-block;
-          margin-top: 6px;
-          padding: 6px 10px;
-          background-color: #1d3e53;
-          color: white;
-          text-decoration: none;
-          border-radius: 6px;
-          font-weight: bold;
+          display: none;
         }
 
         #suggest-button:hover {
-          background-color: #2a5672;
+          display: none;
         }
 
         #install-button {
@@ -525,6 +536,12 @@
             <span class="filter-text">Filters</span>
         </button>
     </div>
+    <div class="suggest-toggle">
+        <button id="suggest-toggle-btn" class="suggest-toggle-btn">
+            <span class="suggest-icon">✉️</span>
+            <span class="suggest-text">Suggest a court</span>
+        </button>
+    </div>
     <div id="filters-container" class="toggle-container">
         <button id="toggle-courts" class="toggle-button active">
             <span class="toggle-status">Hide</span>
@@ -571,14 +588,6 @@
     </div>
 </div>
 
-<!-- Boîte de suggestion -->
-<div id="suggestion-box">
-    <p id="suggest-intro">💡 Vous connaissez un terrain manquant ?</p>
-    <a id="suggest-button" href="#">
-        ✉️ Proposer un terrain
-    </a>
-</div>
-
 <!-- Install Button -->
 <div id="install-button">
     <img src="images/install-icon.svg" alt="Install"/>
@@ -605,7 +614,8 @@
         pickUpGamesText: "Pick-Up Games",
         filterText: "Filtres",
         languageText: "Langue",
-        flag: "🇫🇷"
+        flag: "🇫🇷",
+        suggestText: "Suggérer un terrain"
       },
       nl: {
         suggestIntro: "💡 Ken je een terrein dat ontbreekt?",
@@ -620,7 +630,8 @@
         pickUpGamesText: "Pick-Up Games",
         filterText: "Filters",
         languageText: "Taal",
-        flag: "🇳🇱"
+        flag: "🇳🇱",
+        suggestText: "Stel een terrein voor"
       },
       en: {
         suggestIntro: "💡 Do you know a missing court?",
@@ -635,22 +646,17 @@
         pickUpGamesText: "Pick-Up Games",
         filterText: "Filters",
         languageText: "Language",
-        flag: "🇬🇧"
+        flag: "🇬🇧",
+        suggestText: "Suggest a court"
       }
     };
 
     // Store the current language
-    let currentLang = 'fr';
+    window.currentLang = 'fr';
 
     function updateLanguage(lang) {
-        currentLang = lang;
+        window.currentLang = lang;
         const t = translations[lang];
-        
-        // Update all text elements
-        document.getElementById("suggest-intro").textContent = t.suggestIntro;
-        const button = document.getElementById("suggest-button");
-        button.textContent = t.suggestBtn;
-        button.href = `mailto:contact@hoops.brussels?subject=${t.mailSubject}&body=${t.mailBody}`;
         
         // Update toggle button texts
         document.querySelector('.courts-text').textContent = t.courtsText;
@@ -660,13 +666,21 @@
         // Update show/hide texts
         document.querySelectorAll('.toggle-button').forEach(button => {
             const statusSpan = button.querySelector('.toggle-status');
-            statusSpan.textContent = button.classList.contains('active') ? t.hideText : t.showText;
+            if (statusSpan) {
+                statusSpan.textContent = button.classList.contains('active') ? t.hideText : t.showText;
+            }
         });
 
         // Update filter text
         const filterText = document.querySelector('.filter-text');
         if (filterText) {
             filterText.textContent = t.filterText;
+        }
+
+        // Update suggest text
+        const suggestText = document.querySelector('.suggest-text');
+        if (suggestText) {
+            suggestText.textContent = t.suggestText;
         }
 
         // Update language button with just the flag
@@ -717,6 +731,15 @@
         if (filterToggleBtn && filtersContainer) {
             filterToggleBtn.addEventListener('click', function() {
                 filtersContainer.classList.toggle('show');
+            });
+        }
+
+        // Suggest court button functionality
+        const suggestToggleBtn = document.getElementById('suggest-toggle-btn');
+        if (suggestToggleBtn) {
+            suggestToggleBtn.addEventListener('click', function() {
+                const t = translations[window.currentLang];
+                window.location.href = `mailto:contact@hoops.brussels?subject=${t.mailSubject}&body=${t.mailBody}`;
             });
         }
 
