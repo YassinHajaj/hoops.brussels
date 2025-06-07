@@ -234,6 +234,16 @@
           padding: 10px;
           border-radius: 10px;
           box-shadow: 0 0 6px rgba(0,0,0,0.2);
+          opacity: 0;
+          transform: translateY(-10px);
+          visibility: hidden;
+          transition: all 0.3s ease;
+        }
+
+        .toggle-container.show {
+          opacity: 1;
+          transform: translateY(0);
+          visibility: visible;
         }
 
         .toggle-button {
@@ -412,10 +422,6 @@
             }
 
             .toggle-container {
-                display: none;
-            }
-
-            .toggle-container.show {
                 display: flex;
             }
 
