@@ -963,7 +963,8 @@
             locationToggleBtn.addEventListener('click', function() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
-                        map.setView([position.coords.latitude, position.coords.longitude], 12);
+                        const currentZoom = map.getZoom();
+                        map.setView([position.coords.latitude, position.coords.longitude], currentZoom);
                     }, function(error) {
                         console.error("Error getting location:", error);
                     });
