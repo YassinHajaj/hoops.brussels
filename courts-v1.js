@@ -144,7 +144,7 @@ const clubs = [
 ];
 
 const pickUpGames = [
-    { nom: "Pick Up Games - ADEPS Auderghem (Sun 5pm - 7pm)", coord: [50,8094674, 4,4430484], description: "<a href='https://www.supersaas.fr/schedule/Pickup_Brussels/Sunday_Ball'> Website</a>" },
+    { nom: "Pick Up Games - ADEPS Auderghem (Sun 5pm - 7pm)", coord: [50.80911657785603, 4.443453365027522], description: "<a href='https://www.supersaas.fr/schedule/Pickup_Brussels/Sunday_Ball'> Website</a>" },
 ]
 
 function createMarkers() {
