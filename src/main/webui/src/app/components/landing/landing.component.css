@@ -1,6 +1,6 @@
 .landing-container {
   min-height: 100vh;
-  background: linear-gradient(-45deg, #1d3e53, #2a5672, #ff6b35, #f7931e, #4a90e2, #7b68ee);
+  background: linear-gradient(-45deg, #0f1a23, #1a2a3a, #8b4513, #a0522d, #2c3e50, #34495e);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
   color: white;
@@ -202,7 +202,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, #ff6b35, #f7931e, #4a90e2, #7b68ee);
+  background: linear-gradient(90deg, #8b4513, #a0522d, #2c3e50, #34495e);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }

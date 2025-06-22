@@ -84,20 +84,9 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
     L.control.zoom({ position: 'bottomleft' }).addTo(this.map);
 
-    // Base layers
-    const lightBase = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png');
-    const detailOverlay = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-    
-    lightBase.addTo(this.map);
-
-    // Zoom-based layer switching
-    this.map.on('zoomend', () => {
-      if (this.map.getZoom() >= 16) {
-        if (!this.map.hasLayer(detailOverlay)) this.map.addLayer(detailOverlay);
-      } else {
-        if (this.map.hasLayer(detailOverlay)) this.map.removeLayer(detailOverlay);
-      }
-    });
+    // Dark theme base layer - used at all zoom levels
+    const darkBase = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png');
+    darkBase.addTo(this.map);
   }
 
   private createMarkers() {
