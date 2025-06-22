@@ -1,0 +1,60 @@
+<div class="landing-container">
+  <!-- Header with Logo -->
+  <div class="logo-container">
+    <img src="assets/images/logo-hoops.png" alt="Hoops Brussels" class="logo">
+  </div>
+
+  <!-- Language Toggle -->
+  <div class="language-toggle">
+    <button class="lang-btn" (click)="setLanguage('fr')" [class.active]="currentLanguage === 'fr'">🇫🇷</button>
+    <button class="lang-btn" (click)="setLanguage('nl')" [class.active]="currentLanguage === 'nl'">🇳🇱</button>
+    <button class="lang-btn" (click)="setLanguage('en')" [class.active]="currentLanguage === 'en'">🇬🇧</button>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">{{ getTranslation('title') }}</h1>
+      <p class="hero-subtitle">{{ getTranslation('subtitle') }}</p>
+      
+      <button class="explore-button" (click)="exploreMap()">
+        <span class="button-icon">🏀</span>
+        <span class="button-text">{{ getTranslation('exploreButton') }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features-section">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏀</div>
+        <h3 class="feature-title">{{ getFeatureTranslation('courts') }}</h3>
+        <p class="feature-description">Find basketball courts across Brussels</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3 class="feature-title">{{ getFeatureTranslation('clubs') }}</h3>
+        <p class="feature-description">Discover local basketball clubs</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3 class="feature-title">{{ getFeatureTranslation('pickUp') }}</h3>
+        <p class="feature-description">Join pick-up games and tournaments</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">⚽</div>
+        <h3 class="feature-title">{{ getFeatureTranslation('multisport') }}</h3>
+        <p class="feature-description">Multisport facilities for all activities</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; {{ getCurrentYear() }} Hoops Brussels. All rights reserved.</p>
+  </div>
+</div> 
